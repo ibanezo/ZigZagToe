@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 4271496072784980}
   - component: {fileID: 65571502210740760}
   - component: {fileID: 114011346271153756}
+  - component: {fileID: 54241235097374756}
   m_Layer: 0
   m_Name: TopTile
   m_TagString: Untagged
@@ -172,6 +173,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1552287763700522}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54241235097374756
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1805465784320538}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
 --- !u!65 &65571502210740760
 BoxCollider:
   m_ObjectHideFlags: 1
