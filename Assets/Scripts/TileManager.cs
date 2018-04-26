@@ -7,14 +7,29 @@ public class TileManager : MonoBehaviour {
     public GameObject[] tilePrefabs;
     public GameObject currentTile;
 
+    private static TileManager tileManager = null;
+
 	// Use this for initialization
 	void Start () {
+        for (int i = 0; i<20; i++)
+        {
+            SpawnTile();
+        }
+    }
 
+    public static TileManager getInstance()
+    {
+        if (tileManager == null)
+        {
+            tileManager = GameObject.FindObjectOfType<TileManager>();
+        }
+
+        return tileManager;
     }
 	
 	// Update is called once per frame
 	void Update () {
-        SpawnTile();
+
 	}
 
     public void SpawnTile()

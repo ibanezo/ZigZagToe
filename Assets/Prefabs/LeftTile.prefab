@@ -67,6 +67,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4475997855490620}
+  - component: {fileID: 65717442219715804}
+  - component: {fileID: 114055194655866280}
   m_Layer: 0
   m_Name: LeftTile
   m_TagString: Untagged
@@ -182,3 +184,26 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65717442219715804
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1845479435661520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.0224233, y: 3.68, z: 3.9582691}
+  m_Center: {x: -1.4813793, y: 3, z: -0.023147583}
+--- !u!114 &114055194655866280
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1845479435661520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67266645990ae80419b99332c9ac071c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
