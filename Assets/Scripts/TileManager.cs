@@ -102,5 +102,13 @@ public class TileManager : MonoBehaviour {
             tmp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
             currentTile = tmp;
         }
+
+        int spawnPickUp = Random.Range(0, 10);
+
+        if(spawnPickUp == 0)
+        {
+            currentTile.transform.GetChild(1).gameObject.SetActive(true);
+        }
+
     }
 }

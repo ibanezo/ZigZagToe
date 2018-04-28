@@ -6,6 +6,7 @@ public class PlayerScript : MonoBehaviour {
 
     public float Speed;
     private Vector3 Direction;
+    public GameObject particalSystem;
 
 
     // Use this for initialization
@@ -32,5 +33,15 @@ public class PlayerScript : MonoBehaviour {
         transform.Translate(Direction * amountToMove);
 
 	}
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "PickUp")
+        {
+            other.gameObject.SetActive(false);
+            Instantiate(particalSystem, transform.position, Quaternion.identity);
+        }
+    }
+
 
 }
