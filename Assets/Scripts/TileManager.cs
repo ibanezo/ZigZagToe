@@ -111,4 +111,8 @@ public class TileManager : MonoBehaviour {
         }
 
     }
+    public void resetGame()
+    {
+        Application.LoadLevel(Application.loadedLevel);
+    }
 }
