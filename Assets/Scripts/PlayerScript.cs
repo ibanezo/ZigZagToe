@@ -48,18 +48,45 @@ public class PlayerScript : MonoBehaviour {
     {
         if (other.tag == "Tile")
         {
+                
             RaycastHit hit;
             Ray downRay = new Ray(transform.position, -Vector3.up);
 
-            if(!Physics.Raycast(downRay, out hit))
+            if (transform.position.y < 0)
             {
                 // Kill player
                 isDead = true;
                 resetButton.SetActive(true);
-                transform.GetChild(0).transform.parent = null;
-                
-               
+                if (transform.childCount > 0)
+                {
+                    transform.GetChild(0).transform.parent = null;
+                }
             }
+            if (transform.position.y < 3.4)
+            {
+                // Kill player
+                isDead = true;
+                resetButton.SetActive(true);
+                if (transform.childCount > 0)
+                {
+                    transform.GetChild(0).transform.parent = null;
+                }
+            }
+
+            /*
+
+
+            if (!Physics.Raycast(downRay, out hit))
+            {
+                // Kill player
+                isDead = true;
+                resetButton.SetActive(true);
+                if (transform.childCount > 0)
+                {
+                    transform.GetChild(0).transform.parent = null;
+                }
+            }
+            */
         }
     }
 
