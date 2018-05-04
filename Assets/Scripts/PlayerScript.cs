@@ -15,6 +15,11 @@ public class PlayerScript : MonoBehaviour {
     public Text scoreText;
     public Animator gameOverAnimator;
 
+    public Text menuScore;
+    public Text menuBestScore;
+
+    private static string BEST_SCORE = "CURRENT BEST SCORE";
+
     // Use this for initialization
     void Start () {
         Direction = Vector3.zero;
@@ -58,9 +63,6 @@ public class PlayerScript : MonoBehaviour {
         if (other.tag == "Tile")
         {
                 
-            RaycastHit hit;
-            Ray downRay = new Ray(transform.position, -Vector3.up);
-
             if (transform.position.y < 0)
             {
                 // Kill player
@@ -80,12 +82,18 @@ public class PlayerScript : MonoBehaviour {
                 {
                     transform.GetChild(0).transform.parent = null;
                 }
+
+                menuScore.text = scoreText.text;
+
+                int currentBestScore = PlayerPrefs.GetInt(BEST_SCORE, 0);
+
+                currentBestScore = Mathf.Max(currentBestScore, int.Parse(menuScore.text));
+                menuBestScore.text = currentBestScore.ToString();
+
+                PlayerPrefs.SetInt(BEST_SCORE, currentBestScore);
+
                 gameOverAnimator.SetTrigger("GameOverTrigger");
             }
-
-            
         }
     }
-
-
 }
