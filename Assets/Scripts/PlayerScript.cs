@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour {
 
@@ -9,7 +10,9 @@ public class PlayerScript : MonoBehaviour {
     public GameObject particalSystem;
     private bool isDead;
     public GameObject resetButton;
-    
+
+    private int score = 0;
+    public Text scoreText;
 
     // Use this for initialization
     void Start () {
@@ -21,6 +24,8 @@ public class PlayerScript : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButtonDown(0) && !isDead)
         {
+            score++;
+            scoreText.text = score.ToString();
             if(Direction == Vector3.forward)
             {
                 Direction = Vector3.left;
@@ -42,6 +47,9 @@ public class PlayerScript : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
             Instantiate(particalSystem, transform.position, Quaternion.identity);
+
+            score += 3;
+            scoreText.text = score.ToString();
         }
     }
     public void OnTriggerExit(Collider other)
@@ -73,20 +81,7 @@ public class PlayerScript : MonoBehaviour {
                 }
             }
 
-            /*
-
-
-            if (!Physics.Raycast(downRay, out hit))
-            {
-                // Kill player
-                isDead = true;
-                resetButton.SetActive(true);
-                if (transform.childCount > 0)
-                {
-                    transform.GetChild(0).transform.parent = null;
-                }
-            }
-            */
+            
         }
     }
 
