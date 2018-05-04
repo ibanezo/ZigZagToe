@@ -13,6 +13,7 @@ public class PlayerScript : MonoBehaviour {
 
     private int score = 0;
     public Text scoreText;
+    public Animator gameOverAnimator;
 
     // Use this for initialization
     void Start () {
@@ -79,6 +80,7 @@ public class PlayerScript : MonoBehaviour {
                 {
                     transform.GetChild(0).transform.parent = null;
                 }
+                gameOverAnimator.SetTrigger("GameOverTrigger");
             }
 
             
