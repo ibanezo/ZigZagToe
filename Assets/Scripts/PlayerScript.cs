@@ -23,6 +23,9 @@ public class PlayerScript : MonoBehaviour {
 
     private int velocityTime = 3;
     private int initialSpeed = 10;
+    private int checkIfDeadTime = 1;
+
+    private Rigidbody rigidbody;
 
     private enum SpeedState
     {
@@ -36,6 +39,7 @@ public class PlayerScript : MonoBehaviour {
         isDead = false;
         PlayerSpeedState = SpeedState.NORMAL;
         Speed = initialSpeed;
+        rigidbody = GetComponent<Rigidbody>();
 	}
 	
 	// Update is called once per frame
@@ -59,7 +63,25 @@ public class PlayerScript : MonoBehaviour {
         float amountToMove = Speed * Time.deltaTime;
         transform.Translate(Direction * amountToMove);
 
+        if (transform.position.y == 3.5)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                rigidbody.AddForce(new Vector3(0, 31, 0), ForceMode.Impulse);
+                StartCoroutine(CheckIfDead());
+            }
+        }
 	}
+
+    IEnumerator CheckIfDead()
+    {
+        yield return new WaitForSeconds(checkIfDeadTime);
+        if (transform.position.y < 3.4)
+        {
+            // Kill player
+            KillPlayer();
+        }
+    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -136,34 +158,34 @@ public class PlayerScript : MonoBehaviour {
             if (transform.position.y < 0)
             {
                 // Kill player
-                isDead = true;
-                resetButton.SetActive(true);
-                if (transform.childCount > 0)
-                {
-                    transform.GetChild(0).transform.parent = null;
-                }
+                KillPlayer();
             }
             if (transform.position.y < 3.4)
             {
                 // Kill player
-                isDead = true;
-                resetButton.SetActive(true);
-                if (transform.childCount > 0)
-                {
-                    transform.GetChild(0).transform.parent = null;
-                }
-
-                menuScore.text = scoreText.text;
-
-                int currentBestScore = PlayerPrefs.GetInt(BEST_SCORE, 0);
-
-                currentBestScore = Mathf.Max(currentBestScore, int.Parse(menuScore.text));
-                menuBestScore.text = currentBestScore.ToString();
-
-                PlayerPrefs.SetInt(BEST_SCORE, currentBestScore);
-
-                gameOverAnimator.SetTrigger("GameOverTrigger");
+                KillPlayer();
             }
         }
+    }
+
+    private void KillPlayer()
+    {
+        isDead = true;
+        resetButton.SetActive(true);
+        if (transform.childCount > 0)
+        {
+            transform.GetChild(0).transform.parent = null;
+        }
+
+        menuScore.text = scoreText.text;
+
+        int currentBestScore = PlayerPrefs.GetInt(BEST_SCORE, 0);
+
+        currentBestScore = Mathf.Max(currentBestScore, int.Parse(menuScore.text));
+        menuBestScore.text = currentBestScore.ToString();
+
+        PlayerPrefs.SetInt(BEST_SCORE, currentBestScore);
+
+        gameOverAnimator.SetTrigger("GameOverTrigger");
     }
 }

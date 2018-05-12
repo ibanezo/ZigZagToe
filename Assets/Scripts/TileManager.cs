@@ -80,27 +80,53 @@ public class TileManager : MonoBehaviour {
 
     public void SpawnTile()
     {
-
         if (LeftTiles.Count == 0 || TopTiles.Count == 0)
         {
             CreateTiles(10);
         }
 
-        int randomIndex = Random.Range(0, 2);
+        int randomIndex = Random.Range(0, 100);
 
-        if(randomIndex == 0)
+        if(randomIndex < 47)
         {
             GameObject tmp = LeftTiles.Pop();
             tmp.SetActive(true);
-            tmp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
+            tmp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(0).position;
             currentTile = tmp;
         }
-        else if (randomIndex == 1)
+        else if (randomIndex < 93)
         {
             GameObject tmp = TopTiles.Pop();
             tmp.SetActive(true);
-            tmp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(randomIndex).position;
+            tmp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(1).position;
             currentTile = tmp;
+        }
+        else if (randomIndex < 100)
+        {
+            CreateTiles(5);
+
+            int newRandomIndex = Random.Range(0, 2);
+
+            if (newRandomIndex == 0)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    GameObject tmp = LeftTiles.Pop();
+                    if (i != 2) tmp.SetActive(true);
+                    tmp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(newRandomIndex).position;
+                    currentTile = tmp;
+                }
+            }
+            else if (newRandomIndex == 1)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    GameObject tmp = TopTiles.Pop();
+                    if (i != 2) tmp.SetActive(true);
+                    tmp.transform.position = currentTile.transform.GetChild(0).transform.GetChild(newRandomIndex).position;
+                    currentTile = tmp;
+                }
+            }
         }
 
         int spawnPickUp = Random.Range(0, 100);
