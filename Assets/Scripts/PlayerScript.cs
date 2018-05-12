@@ -19,11 +19,23 @@ public class PlayerScript : MonoBehaviour {
     public Text menuBestScore;
 
     private static string BEST_SCORE = "CURRENT BEST SCORE";
+    private SpeedState PlayerSpeedState;
+
+    private int velocityTime = 3;
+    private int initialSpeed = 10;
+
+    private enum SpeedState
+    {
+        NORMAL, FAST, SLOW
+    }
+
 
     // Use this for initialization
     void Start () {
         Direction = Vector3.zero;
         isDead = false;
+        PlayerSpeedState = SpeedState.NORMAL;
+        Speed = initialSpeed;
 	}
 	
 	// Update is called once per frame
@@ -40,6 +52,8 @@ public class PlayerScript : MonoBehaviour {
             {
                 Direction = Vector3.forward;
             }
+
+            initialSpeed = 10 + (score / 20);
         }
 
         float amountToMove = Speed * Time.deltaTime;
@@ -56,8 +70,64 @@ public class PlayerScript : MonoBehaviour {
 
             score += 3;
             scoreText.text = score.ToString();
+
+            initialSpeed = 10 + (score / 20);
+        }
+        else if (other.tag == "PickUpSlowSpeed")
+        {
+            other.gameObject.SetActive(false);
+            Instantiate(particalSystem, transform.position, Quaternion.identity);
+
+            if (PlayerSpeedState != SpeedState.SLOW)
+            {
+                StartCoroutine(SlowDown());
+            }
+        }
+        else if (other.tag == "PickUpFastSpeed")
+        {
+            other.gameObject.SetActive(false);
+            Instantiate(particalSystem, transform.position, Quaternion.identity);
+
+            if (PlayerSpeedState != SpeedState.FAST)
+            {
+                StartCoroutine(SpeedUp());
+            }
         }
     }
+
+    IEnumerator SlowDown()
+    {
+        SlowGame();
+        yield return new WaitForSeconds(velocityTime);
+        NormalizeGame();
+    }
+
+    IEnumerator SpeedUp()
+    {
+        FastGame();
+        yield return new WaitForSeconds(velocityTime);
+        NormalizeGame();
+    }
+
+    private void SlowGame()
+    {
+        Speed = (int) (initialSpeed * 0.7);
+        PlayerSpeedState = SpeedState.SLOW;
+    }
+
+    private void NormalizeGame()
+    {
+        Speed = initialSpeed;
+        PlayerSpeedState = SpeedState.NORMAL;
+    }
+
+    private void FastGame()
+    {
+        Speed = (int) (initialSpeed * 1.3);
+        PlayerSpeedState = SpeedState.FAST;
+    }
+
+
     public void OnTriggerExit(Collider other)
     {
         if (other.tag == "Tile")

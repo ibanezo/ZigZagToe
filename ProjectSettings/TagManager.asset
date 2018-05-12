@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PickUp
   - Tile
+  - PickUp
+  - PickUpFastSpeed
+  - PickUpSlowSpeed
   layers:
   - Default
   - TransparentFX

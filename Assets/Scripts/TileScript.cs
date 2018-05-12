@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour {
 
-    private static readonly int fallDelay = 1;
+    public static int fallDelay = 1;
 
 	// Use this for initialization
 	void Start () {
@@ -28,11 +28,11 @@ public class TileScript : MonoBehaviour {
 
     IEnumerator FallDown()
     {
+
         yield return new WaitForSeconds(fallDelay);
         GetComponent<Rigidbody>().isKinematic = false;
 
         yield return new WaitForSeconds(fallDelay);
-
         TileManager tileManager = TileManager.getInstance();
 
         gameObject.GetComponent<Rigidbody>().isKinematic = true;
