@@ -57,7 +57,7 @@ public class PlayerScript : MonoBehaviour {
                 Direction = Vector3.forward;
             }
 
-            initialSpeed = 10 + (score / 20);
+            initialSpeed = 10 + (score / 40);
         }
 
         float amountToMove = Speed * Time.deltaTime;
@@ -65,7 +65,7 @@ public class PlayerScript : MonoBehaviour {
 
         if (transform.position.y == 3.5)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetMouseButtonDown(1) && !isDead)
             {
                 rigidbody.AddForce(new Vector3(0, 31, 0), ForceMode.Impulse);
                 StartCoroutine(CheckIfDead());
@@ -93,7 +93,7 @@ public class PlayerScript : MonoBehaviour {
             score += 3;
             scoreText.text = score.ToString();
 
-            initialSpeed = 10 + (score / 20);
+            initialSpeed = 10 + (score / 40);
         }
         else if (other.tag == "PickUpSlowSpeed")
         {
@@ -133,7 +133,7 @@ public class PlayerScript : MonoBehaviour {
 
     private void SlowGame()
     {
-        Speed = (int) (initialSpeed * 0.7);
+        Speed = (int) (initialSpeed * 0.8);
         PlayerSpeedState = SpeedState.SLOW;
     }
 
@@ -145,7 +145,7 @@ public class PlayerScript : MonoBehaviour {
 
     private void FastGame()
     {
-        Speed = (int) (initialSpeed * 1.3);
+        Speed = (int) (initialSpeed * 1.2);
         PlayerSpeedState = SpeedState.FAST;
     }
 

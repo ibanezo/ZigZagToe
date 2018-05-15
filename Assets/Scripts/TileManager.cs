@@ -135,11 +135,11 @@ public class TileManager : MonoBehaviour {
         {
             currentTile.transform.GetChild(1).gameObject.SetActive(true);
         }
-        else if (spawnPickUp < 12)
+        else if (spawnPickUp < 11)
         {
             currentTile.transform.GetChild(2).gameObject.SetActive(true);
         }
-        else if (spawnPickUp < 14)
+        else if (spawnPickUp < 13)
         {
             currentTile.transform.GetChild(3).gameObject.SetActive(true);
         }
