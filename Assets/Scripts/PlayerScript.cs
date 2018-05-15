@@ -31,6 +31,12 @@ public class PlayerScript : MonoBehaviour {
     {
         NORMAL, FAST, SLOW
     }
+    public AudioSource jumpSound;
+    public AudioSource clickSound;
+    public AudioSource SpeedUpSound;
+    public AudioSource CollectSound;
+    public AudioSource EndSound;
+
 
 
     // Use this for initialization
@@ -46,7 +52,8 @@ public class PlayerScript : MonoBehaviour {
 	void Update () {
         if (Input.GetMouseButtonDown(0) && !isDead)
         {
-            score++;
+            clickSound.Play();
+           score++;
             scoreText.text = score.ToString();
             if(Direction == Vector3.forward)
             {
@@ -67,6 +74,7 @@ public class PlayerScript : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(1) && !isDead)
             {
+                jumpSound.Play();
                 rigidbody.AddForce(new Vector3(0, 31, 0), ForceMode.Impulse);
                 StartCoroutine(CheckIfDead());
             }
@@ -89,7 +97,7 @@ public class PlayerScript : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
             Instantiate(particalSystem, transform.position, Quaternion.identity);
-
+            CollectSound.Play();
             score += 3;
             scoreText.text = score.ToString();
 
@@ -109,7 +117,7 @@ public class PlayerScript : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
             Instantiate(particalSystem, transform.position, Quaternion.identity);
-
+            SpeedUpSound.Play();
             if (PlayerSpeedState != SpeedState.FAST)
             {
                 StartCoroutine(SpeedUp());
@@ -170,6 +178,7 @@ public class PlayerScript : MonoBehaviour {
 
     private void KillPlayer()
     {
+        EndSound.Play();
         isDead = true;
         resetButton.SetActive(true);
         if (transform.childCount > 0)
