@@ -44,6 +44,7 @@ public class PlayerScript : MonoBehaviour {
     public AudioSource SpeedUpSound;
     public AudioSource CollectSound;
     public AudioSource EndSound;
+    public AudioSource SlowDownSound;
 
 
 
@@ -130,6 +131,7 @@ public class PlayerScript : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
             Instantiate(particalSystem, transform.position, Quaternion.identity);
+            SlowDownSound.Play();
             StartCoroutine(SlowDown());
         }
         else if (other.tag == "PickUpFastSpeed")
