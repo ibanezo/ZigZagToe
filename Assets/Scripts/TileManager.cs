@@ -10,6 +10,10 @@ public class TileManager : MonoBehaviour {
     private Stack<GameObject> leftTiles = new Stack<GameObject>();
     private Stack<GameObject> topTiles = new Stack<GameObject>();
 
+    public static string GAME_RESTARTED_KEY = "Game Restarted Key";
+    public static string GAME_RESTARTED = "Game Restarted";
+    public static string GAME_NOT_RESTARTED = "Game Not Restarted";
+
     private static TileManager tileManager = null;
 
     public Stack<GameObject> LeftTiles
@@ -147,6 +151,7 @@ public class TileManager : MonoBehaviour {
     }
     public void resetGame()
     {
+        PlayerPrefs.SetString(GAME_RESTARTED_KEY, GAME_RESTARTED);
         Application.LoadLevel(Application.loadedLevel);
     }
 }

@@ -21,18 +21,26 @@ public class PlayerScript : MonoBehaviour {
     private static string BEST_SCORE = "CURRENT BEST SCORE";
     private SpeedState PlayerSpeedState;
 
+    private bool GameStarted;
+    private bool GameRestarted;
+
     private int velocityTime = 3;
     private int initialSpeed = 10;
     private int checkIfDeadTime = 1;
 
     private Rigidbody rigidbody;
 
+    public Animator startGameAnimator;
+
+    public GameObject startGameMenu;
+    public GameObject helpGameMenu;
+    public GameObject infoGameMenu;
+
     private enum SpeedState
     {
         NORMAL, FAST, SLOW
     }
     public AudioSource jumpSound;
-    public AudioSource clickSound;
     public AudioSource SpeedUpSound;
     public AudioSource CollectSound;
     public AudioSource EndSound;
@@ -46,14 +54,29 @@ public class PlayerScript : MonoBehaviour {
         PlayerSpeedState = SpeedState.NORMAL;
         Speed = initialSpeed;
         rigidbody = GetComponent<Rigidbody>();
-	}
+
+        //PlayerPrefs.DeleteAll();
+
+        string gameRestarted = PlayerPrefs.GetString(TileManager.GAME_RESTARTED_KEY, TileManager.GAME_NOT_RESTARTED);
+
+        if (gameRestarted.Equals(TileManager.GAME_RESTARTED))
+        {
+            startGameMenu.SetActive(false);
+            Direction = Vector3.forward;
+            GameStarted = true;
+            
+        }
+        else
+        {
+            GameStarted = false;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0) && !isDead)
+        if (Input.GetMouseButtonDown(0) && !isDead && GameStarted)
         {
-            clickSound.Play();
-           score++;
+            score++;
             scoreText.text = score.ToString();
             if(Direction == Vector3.forward)
             {
@@ -72,7 +95,7 @@ public class PlayerScript : MonoBehaviour {
 
         if (transform.position.y == 3.5)
         {
-            if (Input.GetMouseButtonDown(1) && !isDead)
+            if (Input.GetMouseButtonDown(1) && !isDead && GameStarted)
             {
                 jumpSound.Play();
                 rigidbody.AddForce(new Vector3(0, 31, 0), ForceMode.Impulse);
@@ -107,21 +130,14 @@ public class PlayerScript : MonoBehaviour {
         {
             other.gameObject.SetActive(false);
             Instantiate(particalSystem, transform.position, Quaternion.identity);
-
-            if (PlayerSpeedState != SpeedState.SLOW)
-            {
-                StartCoroutine(SlowDown());
-            }
+            StartCoroutine(SlowDown());
         }
         else if (other.tag == "PickUpFastSpeed")
         {
             other.gameObject.SetActive(false);
             Instantiate(particalSystem, transform.position, Quaternion.identity);
             SpeedUpSound.Play();
-            if (PlayerSpeedState != SpeedState.FAST)
-            {
-                StartCoroutine(SpeedUp());
-            }
+            StartCoroutine(SpeedUp());
         }
     }
 
@@ -178,23 +194,65 @@ public class PlayerScript : MonoBehaviour {
 
     private void KillPlayer()
     {
-        EndSound.Play();
-        isDead = true;
-        resetButton.SetActive(true);
-        if (transform.childCount > 0)
+        if (!isDead)
         {
-            transform.GetChild(0).transform.parent = null;
+            EndSound.Play();
+            isDead = true;
+            resetButton.SetActive(true);
+            if (transform.childCount > 0)
+            {
+                transform.GetChild(0).transform.parent = null;
+            }
+
+            menuScore.text = scoreText.text;
+
+            int currentBestScore = PlayerPrefs.GetInt(BEST_SCORE, 0);
+
+            currentBestScore = Mathf.Max(currentBestScore, int.Parse(menuScore.text));
+            menuBestScore.text = currentBestScore.ToString();
+
+            PlayerPrefs.SetInt(BEST_SCORE, currentBestScore);
+
+            gameOverAnimator.SetTrigger("GameOverTrigger");
         }
+    }
 
-        menuScore.text = scoreText.text;
+    public void startGame()
+    {
+        PlayerPrefs.SetString(TileManager.GAME_RESTARTED_KEY, TileManager.GAME_NOT_RESTARTED);
+        GameStarted = true;
+        Direction = Vector3.forward;
+        startGameAnimator.SetTrigger("StartGameTrigger");
+    }
 
-        int currentBestScore = PlayerPrefs.GetInt(BEST_SCORE, 0);
+    public void exitGame()
+    {
+        PlayerPrefs.SetString(TileManager.GAME_RESTARTED_KEY, TileManager.GAME_NOT_RESTARTED);
+        Application.Quit();
+    }
 
-        currentBestScore = Mathf.Max(currentBestScore, int.Parse(menuScore.text));
-        menuBestScore.text = currentBestScore.ToString();
+    public void getMenu()
+    {
+        PlayerPrefs.SetString(TileManager.GAME_RESTARTED_KEY, TileManager.GAME_NOT_RESTARTED);
+        Application.LoadLevel(Application.loadedLevel);
+    }
 
-        PlayerPrefs.SetInt(BEST_SCORE, currentBestScore);
+    public void returnToMenu()
+    {
+        infoGameMenu.SetActive(false);
+        helpGameMenu.SetActive(false);
+        startGameMenu.SetActive(true);
+    }
 
-        gameOverAnimator.SetTrigger("GameOverTrigger");
+    public void getHelp()
+    {
+        startGameMenu.SetActive(false);
+        helpGameMenu.SetActive(true);
+    }
+
+    public void getInfo()
+    {
+        startGameMenu.SetActive(false);
+        infoGameMenu.SetActive(true);
     }
 }
