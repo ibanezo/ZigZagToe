@@ -383,7 +383,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: INFO
+  m_Text: I N F O
 --- !u!222 &110210470
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -457,7 +457,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: HELP
+  m_Text: H E L P
 --- !u!222 &145304978
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -531,7 +531,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: START
+  m_Text: S T A R T
 --- !u!222 &176948884
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -948,7 +948,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: QUIT
+  m_Text: Q U I T
 --- !u!222 &359650381
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1226,7 +1226,7 @@ GameObject:
   - component: {fileID: 498506993}
   - component: {fileID: 498506992}
   m_Layer: 5
-  m_Name: BestScoreText
+  m_Name: JumpDesc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1817,7 +1817,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MENU
+  m_Text: M E N U
 --- !u!222 &716643098
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1962,7 +1962,7 @@ GameObject:
   - component: {fileID: 803809960}
   - component: {fileID: 803809959}
   m_Layer: 5
-  m_Name: Score
+  m_Name: MoveCommand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2018,7 +2018,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: LEFT CLICK
+  m_Text: TAP
 --- !u!222 &803809960
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2036,7 +2036,7 @@ GameObject:
   - component: {fileID: 879693231}
   - component: {fileID: 879693230}
   m_Layer: 5
-  m_Name: BestScore
+  m_Name: JumpCommand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2092,7 +2092,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RIGHT CLICK
+  m_Text: SWIPE UP
 --- !u!222 &879693231
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2241,7 +2241,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: HELP
+  m_Text: H E L P
 --- !u!222 &982316241
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2453,7 +2453,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 30% FASTER
+  m_Text: 20% FASTER
 --- !u!222 &1109643353
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3100,16 +3100,16 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 69
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 4
     m_MaxSize: 69
     m_Alignment: 4
-    m_AlignByGeometry: 0
+    m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: GAME OVER
+  m_Text: G A M E  O V E R
 --- !u!222 &1256375558
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3302,7 +3302,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 30% SLOWER
+  m_Text: 20% SLOWER
 --- !u!222 &1346480530
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3825,7 +3825,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: INFO
+  m_Text: I N F O
 --- !u!222 &1557244784
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3899,7 +3899,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RETRY
+  m_Text: R E T R Y
 --- !u!222 &1562734744
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4309,7 +4309,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 69
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 4
     m_MaxSize: 69
     m_Alignment: 4
@@ -4318,7 +4318,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ZIG ZAG TOE
+  m_Text: Z I G  Z A G  T O E
 --- !u!222 &1602969881
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4514,7 +4514,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: MENU
+  m_Text: M E N U
 --- !u!222 &1659731183
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4828,7 +4828,7 @@ GameObject:
   - component: {fileID: 1852682117}
   - component: {fileID: 1852682116}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: MoveDesc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

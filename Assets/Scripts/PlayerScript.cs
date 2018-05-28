@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour {
 
     private int velocityTime = 3;
     private int initialSpeed = 10;
-    private int checkIfDeadTime = 1;
+    private float checkIfDeadTime = 1;
 
     private Rigidbody rigidbody;
 
@@ -46,7 +46,17 @@ public class PlayerScript : MonoBehaviour {
     public AudioSource EndSound;
     public AudioSource SlowDownSound;
 
+    private enum UserInput
+    {
+        NONE, TAP, SWIPE
+    }
 
+    private UserInput userInput;
+    private Vector3 fp;   //First touch position
+    private Vector3 lp;   //Last touch position
+    private float dragDistance;  //minimum distance for a swipe to be registered
+
+    private bool jumped;
 
     // Use this for initialization
     void Start () {
@@ -55,8 +65,9 @@ public class PlayerScript : MonoBehaviour {
         PlayerSpeedState = SpeedState.NORMAL;
         Speed = initialSpeed;
         rigidbody = GetComponent<Rigidbody>();
-
-        //PlayerPrefs.DeleteAll();
+        userInput = UserInput.NONE;
+        dragDistance = Screen.height * 10 / 100; //dragDistance is 10% height of the screen
+        jumped = false;
 
         string gameRestarted = PlayerPrefs.GetString(TileManager.GAME_RESTARTED_KEY, TileManager.GAME_NOT_RESTARTED);
 
@@ -75,7 +86,10 @@ public class PlayerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetMouseButtonDown(0) && !isDead && GameStarted)
+
+        UpdateUserInput();
+
+        if (userInput == UserInput.TAP && !isDead && GameStarted)
         {
             score++;
             scoreText.text = score.ToString();
@@ -87,23 +101,62 @@ public class PlayerScript : MonoBehaviour {
             {
                 Direction = Vector3.forward;
             }
-
-            initialSpeed = 10 + (score / 40);
         }
 
+        initialSpeed = 10 + (score / 40);
         float amountToMove = Speed * Time.deltaTime;
         transform.Translate(Direction * amountToMove);
 
-        if (transform.position.y == 3.5)
+        if (userInput == UserInput.SWIPE && !isDead && GameStarted && transform.position.y == 3.5 && !jumped)
         {
-            if (Input.GetMouseButtonDown(1) && !isDead && GameStarted)
+            jumpSound.Play();
+            rigidbody.AddForce(new Vector3(0, 31, 0), ForceMode.Impulse);
+            StartCoroutine(ReallowJumping());
+            StartCoroutine(CheckIfDead());
+        }
+        userInput = UserInput.NONE;
+    }
+
+    private void UpdateUserInput()
+    {
+        if (Input.touchCount == 1) // user is touching the screen with a single touch
+        {
+            Touch touch = Input.GetTouch(0); // get the touch
+            if (touch.phase == TouchPhase.Began) //check for the first touch
             {
-                jumpSound.Play();
-                rigidbody.AddForce(new Vector3(0, 31, 0), ForceMode.Impulse);
-                StartCoroutine(CheckIfDead());
+                fp = touch.position;
+                lp = touch.position;
+            }
+            else if (touch.phase == TouchPhase.Moved) // update the last position based on where they moved
+            {
+                lp = touch.position; //last touch position
+
+                //Check if drag distance is greater than 10% of the screen height
+                if (lp.y > fp.y + dragDistance)
+                {
+                    userInput = UserInput.SWIPE;
+                }
+            }
+            else if (touch.phase == TouchPhase.Ended) //check if the finger is removed from the screen
+            {
+                lp = touch.position; //last touch position
+
+                //Check if drag distance is greater than 10% of the screen height
+                if (lp.y > fp.y + dragDistance)
+                {
+                    userInput = UserInput.SWIPE;
+                }
+                else
+                {   //It's a tap as the drag distance is less than 10% of the screen height
+                    userInput = UserInput.TAP;
+                }
             }
         }
-	}
+        else
+        {
+            userInput = UserInput.NONE;
+        }
+    }
 
     IEnumerator CheckIfDead()
     {
@@ -113,6 +166,13 @@ public class PlayerScript : MonoBehaviour {
             // Kill player
             KillPlayer();
         }
+    }
+
+    IEnumerator ReallowJumping()
+    {
+        jumped = true;
+        yield return new WaitForSeconds(0.2f);
+        jumped = false;
     }
 
     public void OnTriggerEnter(Collider other)
@@ -256,5 +316,10 @@ public class PlayerScript : MonoBehaviour {
     {
         startGameMenu.SetActive(false);
         infoGameMenu.SetActive(true);
+    }
+
+    void OnApplicationQuit()
+    {
+        PlayerPrefs.SetString(TileManager.GAME_RESTARTED_KEY, TileManager.GAME_NOT_RESTARTED);
     }
 }
