@@ -25,19 +25,19 @@ Along the path, the player can pick up 3 types of power-ups:
 In the creating of the solution, we've used a lot of the functionalities provided by the engines of **Unity**, alongside scripting.  
 For this purpose, a few classes were developed:
 ### PlayerScript.cs
-This script is atteched to the player.  
+This script is attached to the player.  
 It has many different properties, such as: Speed, Speed State, Direction and so on.  
 It mainly handles the inputs so it can change direction, as well as triggers from Pick Up colliders.
 ### TileManager.cs
-This script is atteched to an empty GameObject that exists within the game.  
+This script is attached to an empty GameObject that exists within the game.  
 The manager is built upon the Singleton Design Pattern, in order to ensure that one and only one manager per game exists.  
 Its main properties are the 2 Stacks of tiles (for each type of tile accordingly: left tiles and top tiles).  
 The goal of this script is to recycle the tiles that fall down after the player passes them, in order not to use too much CPU power for creating new ones all the time, as well as saving RAM.  
 ### TileScipt.cs (code described below)
-This script is atteched to each tile in the game.  
+This script is attached to each tile in the game.  
 It's point is initiate fall down sequence once the player passes it.  
 ### ParticleScript.cs
-This script is atteched to a particle system.  
+This script is attached to a particle system.  
 It's point is to initate the particle system in order to create an illusion of an explotion once the player collects a power up.
 
 ## Script Description (TileScript.cs)
@@ -59,7 +59,7 @@ This leads to the explanation of the first method within the script:
         }
     }
 ```
-This method is called by the engine whenever the other collider A.K.A. the player exits the box collider of the tile previously mentioned.  
+This method is called by the engine whenever the other collider i.e. the player exits the box collider of the tile previously mentioned.  
 What this methods does is, once the player leaves a tile, an instance of the TileManager is obtained (through the Singleton Pattern) and a new tile is spawned at the end of the path.  
 Also, a FallDown() coroutine is started, which leads to the explanation of the second method within the script:
 ```cs
