@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour {
 
     private int velocityTime = 3;
     private int initialSpeed = 10;
-    private float checkIfDeadTime = 1;
+    private float checkIfDeadTime = 2f;
 
     private Rigidbody rigidbody;
 
@@ -207,14 +207,20 @@ public class PlayerScript : MonoBehaviour {
     {
         SlowGame();
         yield return new WaitForSeconds(velocityTime);
-        NormalizeGame();
+        if (PlayerSpeedState == SpeedState.SLOW)
+        {
+            NormalizeGame();
+        }
     }
 
     IEnumerator SpeedUp()
     {
         FastGame();
         yield return new WaitForSeconds(velocityTime);
-        NormalizeGame();
+        if (PlayerSpeedState == SpeedState.FAST)
+        {
+            NormalizeGame();
+        }
     }
 
     private void SlowGame()
@@ -239,16 +245,9 @@ public class PlayerScript : MonoBehaviour {
     public void OnTriggerExit(Collider other)
     {
         if (other.tag == "Tile")
-        {
-                
-            if (transform.position.y < 0)
-            {
-                // Kill player
-                KillPlayer();
-            }
+        { 
             if (transform.position.y < 3.4)
             {
-                // Kill player
                 KillPlayer();
             }
         }
