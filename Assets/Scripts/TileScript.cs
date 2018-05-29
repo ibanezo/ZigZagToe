@@ -28,7 +28,6 @@ public class TileScript : MonoBehaviour {
 
     IEnumerator FallDown()
     {
-
         yield return new WaitForSeconds(fallDelay);
         GetComponent<Rigidbody>().isKinematic = false;
 
